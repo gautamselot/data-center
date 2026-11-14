@@ -30,8 +30,11 @@ td input{width:96px;padding:6px 8px}input[type=checkbox]{width:auto}
 .btn{background:var(--pri);color:var(--onpri);border:0;border-radius:8px;padding:11px 18px;font:700 15px inherit;cursor:pointer}
 .btn.s{background:none;color:var(--ink);border:1px solid var(--line);padding:6px 12px;font-size:13px}.btn.w{width:100%;margin-top:16px}
 :focus-visible{outline:3px solid var(--acc);outline-offset:2px}
-.login{max-width:410px;margin:6vh auto 0;text-align:center}.err{color:var(--r);font-weight:700;min-height:22px;margin-top:10px}
-.pv{margin-top:12px}.al{padding:8px 0;border-bottom:1px solid var(--line)}
-#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--pri);color:var(--onpri);padding:10px 18px;border-radius:99px;font-weight:700;display:none;z-index:9}
-#modal{position:fixed;inset:0;background:rgba(10,12,16,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:8}
-.b{white-space:nowrap}
+.log.card.login{width:100%;max-width:420px;margin:8vh auto 0;padding:32px 28px 28px;text-align:center;border-radius:18px;box-shadow:0 10px 40px rgba(0,0,0,.10)}
+.login h1{font-size:26px;margin:12px 0 2px}.login .sub{margin:0 0 22px}
+.login label{text-align:left;font-weight:600;font-size:13px;margin:16px 0 6px}
+.login select,.login input:not([type=checkbox]){height:48px;border-radius:10px}
+.login .btn.w{height:48px;margin-top:18px;border-radius:10px;font-size:16px}
+.login .err{min-height:20px;margin-top:12px;font-size:13px}
+.login .show{display:flex;gap:8px;align-items:center;margin:10px 0 0;font-weight:400;color:var(--mut)}
+@media(max-width:640px){.card.login{margin-top:4vh;padding:24px 18px;box-shadow:none}}

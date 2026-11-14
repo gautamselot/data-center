@@ -3,3 +3,18 @@
 @media(max-width:640px){
 .cum table{font-size:11px}.cum th,.cum td{padding:7px 2px;text-align:center}.cum th:first-child,.cum td:first-child{position:static;min-width:0;max-width:none;background:none;text-align:left;padding-left:4px}
 }
+/* Report tables on screen: grid lines, sticky header, coloured cells */
+.rep .tw{max-height:72vh;overflow:auto;border:1px solid var(--line);border-radius:10px}
+.rep table{border-collapse:separate;border-spacing:0;font-variant-numeric:tabular-nums}
+.rep th,.rep td{padding:8px 10px;text-align:right;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.rep th:last-child,.rep td:last-child{border-right:0}
+.rep th:nth-child(-n+2),.rep tr:not(.ft) td:nth-child(-n+2),.rep tr.ft td:first-child{text-align:left}
+.rep tr:first-child th{position:sticky;top:0;z-index:2;background-color:var(--bg);color:var(--ink);font-weight:700;border-bottom:2px solid var(--mut)}
+.rep tr:nth-child(even) td{background-image:linear-gradient(rgba(127,127,127,.07),rgba(127,127,127,.07))}
+.rep tr:hover td{background-image:linear-gradient(rgba(127,127,127,.14),rgba(127,127,127,.14))}
+.rep tr:not(.ft) td:empty::after{content:"–";color:var(--mut)}
+.rep td.g{background-color:var(--gt)}.rep td.r{background-color:var(--rt)}
+.rep tr.ft td{background-color:var(--bg);border-top:2px solid var(--mut)}
+.rep table:not(.cum) th:first-child,.rep table:not(.cum) td:first-child{position:sticky;left:0;z-index:1;background-color:var(--card)}
+.rep table:not(.cum) tr:first-child th:first-child{z-index:3;background-color:var(--bg)}
+.rep table:not(.cum) tr.ft td:first-child{background-color:var(--bg)}

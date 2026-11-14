@@ -1,0 +1,3 @@
+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
+
+git clone https://gautamselot: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@github.com/gautamselot/data-center.git C:\DataCenter
