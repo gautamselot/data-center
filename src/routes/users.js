@@ -1,0 +1,15 @@
+'use strict';
+// Accounts (super admin), departments, and the remark shown on the Operator details screen.
+const {q1,ex}=require('../db');
+const {PRESSES}=require('../config');
+const {now,audit,hash,rpw,uid,bad}=require('../util');
+const {isMgr}=require('../access');
+const {route}=require('../router');
+route('POST','/api/users','super',(u,b)=>{const n=String(b.name||'').trim();if(!n)bad('Enter a name');const id=uid(n),r=b.role=='admin'?'admin':b.role=='operator'?'operator':'hod',p=rpw(),ini=String(b.ini||'').trim().toUpperCase()||n.split(/\s+/).map(w=>w[0]).join('').toUpperCase();if(q1('SELECT 1 x FROM users WHERE lower(ini)=?',ini.toLowerCase()))bad('Those initials are already used. Enter different initials.');const dept=String(b.dept||'').trim(),sup=r=='operator'&&b.sup?1:0;if(dept&&!q1('SELECT 1 x FROM departments WHERE name=?',dept))bad('Unknown department');if(r=='operator'&&!dept)bad('Choose a department for the operator');
+ ex('INSERT INTO users(id,name,ini,role,pw_hash,active,created_at) VALUES(?,?,?,?,?,1,?)',id,n,ini,r,hash(p),now());ex('UPDATE users SET dept=?,sup=? WHERE id=?',r=='admin'?null:dept||null,sup,id);if(r=='hod')PRESSES.forEach(x=>ex('INSERT INTO hod_press VALUES(?,?)',id,x[0]));audit(u.id,'Created account '+id);return{id,ini,password:p}});
+route('POST','/api/users/reset','super',(u,b)=>{const p=rpw();if(!ex('UPDATE users SET pw_hash=? WHERE id=?',hash(p),b.id).changes)bad('No such user',404);ex('DELETE FROM sessions WHERE user_id=?',b.id);audit(u.id,'Reset password for '+b.id);return{id:b.id,password:p}});
+route('POST','/api/users/toggle','super',(u,b)=>{if(b.id==u.id)bad('You cannot deactivate yourself');ex('UPDATE users SET active=1-active WHERE id=?',b.id);ex('DELETE FROM sessions WHERE user_id=?',b.id);audit(u.id,'Toggled active for '+b.id);return{ok:1}});
+route('POST','/api/users/press','super',(u,b)=>{if(q1('SELECT 1 x FROM hod_press WHERE user_id=? AND press=?',b.id,b.press))ex('DELETE FROM hod_press WHERE user_id=? AND press=?',b.id,b.press);else ex('INSERT INTO hod_press VALUES(?,?)',b.id,b.press);audit(u.id,`Changed presses for ${b.id}`);return{ok:1}});
+route('POST','/api/dept','super',(u,b)=>{const n=String(b.name||'').trim();if(!n)bad('Enter a department name');if(q1('SELECT 1 x FROM departments WHERE lower(name)=?',n.toLowerCase()))bad('That department already exists');ex('INSERT INTO departments VALUES(?)',n);audit(u.id,'Added department '+n);return{ok:1}});
+route('POST','/api/users/dept','super',(u,b)=>{const d=String(b.dept||'').trim();if(d&&!q1('SELECT 1 x FROM departments WHERE name=?',d))bad('Unknown department');if(!ex('UPDATE users SET dept=? WHERE id=?',d||null,b.id).changes)bad('No such user',404);audit(u.id,`Set department of ${b.id} to ${d||'none'}`);return{ok:1}});
+route('POST','/api/users/remark','any',(u,b)=>{const t=q1('SELECT * FROM users WHERE id=?',b.id);if(!t)bad('No such user',404);if(!isMgr(u,t.dept))bad('Not allowed',403);ex('UPDATE users SET remark=? WHERE id=?',String(b.remark||'').trim().slice(0,80),t.id);audit(u.id,'Updated remark for '+t.id);return{ok:1}});

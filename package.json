@@ -1,0 +1,11 @@
+{
+  "name": "data-center",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Data Center: press production + operator entry. Local backend (Node 22.13+, built-in SQLite, zero dependencies).",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": { "node": ">=22.13" }
+}

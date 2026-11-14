@@ -1,0 +1,5 @@
+/* Reports: the cumulative table fits a phone without scrolling. */
+.cum table{table-layout:fixed;width:100%}.cum th,.cum td{white-space:normal}
+@media(max-width:640px){
+.cum table{font-size:11px}.cum th,.cum td{padding:7px 2px;text-align:center}.cum th:first-child,.cum td:first-child{position:static;min-width:0;max-width:none;background:none;text-align:left;padding-left:4px}
+}

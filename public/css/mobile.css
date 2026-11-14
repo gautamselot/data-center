@@ -1,0 +1,12 @@
+/* Phone layout for the whole app (under 640px). */
+html{-webkit-text-size-adjust:100%;overflow-x:hidden}body{overflow-x:clip;min-height:100vh;min-height:100dvh}main{min-width:0}.card,.tw{max-width:100%}.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+#modal{overflow-y:auto}#mbody{max-height:90dvh;overflow-y:auto;width:100%}.btn,nav button,select{min-height:44px}
+@media(max-width:640px){
+body{font-size:15px}.bar{flex-wrap:wrap;padding:8px 12px;gap:6px}.wm{height:32px}.sp{display:none}.brand{flex:1}
+.who{width:100%;order:3;text-align:left;font-size:12px;line-height:1.5;border-top:1px solid var(--line);padding-top:6px}.who b{display:inline;margin-right:6px}
+nav{padding:0 6px}nav button{padding:10px 11px;font-size:13px}main{padding:14px 12px 80px}h1{font-size:21px}
+input,select,textarea{font-size:16px;min-height:44px}.row{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr;gap:10px}.big{font-size:24px}
+.card{padding:12px}table{font-size:13px}th,td{padding:7px 7px}td input{width:84px}
+.tw th:first-child,.tw td:first-child{position:sticky;left:0;background:var(--card);z-index:1;white-space:normal;min-width:96px;max-width:120px}
+.login{margin-top:3vh}.tiles{grid-template-columns:1fr 1fr}.btn.s{min-height:40px}}
+@media(max-width:360px){.grid,.tiles{grid-template-columns:1fr}}

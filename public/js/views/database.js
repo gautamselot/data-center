@@ -1,0 +1,3 @@
+// Read-only database viewer (super admin).
+async function loadDb(){try{const j=await api('/api/db');$('#dbx').innerHTML=j.tables.map(t=>`<h2>${t.name} <small style="font-weight:400;color:var(--mut)">${t.count} rows</small></h2><div class="card tw"><table><tr>${t.cols.map(c=>`<th>${c}</th>`).join('')}</tr>${t.rows.map(r=>`<tr>${t.cols.map(c=>`<td>${String(r[c]??'').replace(/</g,'&lt;')}</td>`).join('')}</tr>`).join('')||'<tr><td>(empty)</td></tr>'}</table></div>`).join('')}catch(e){$('#dbx').textContent=e.message}}
+V.db=()=>`<h1>Database</h1><p class="sub">Live, read-only view of every table in the local database file. Latest 300 rows per table.</p><div id="dbx">Loading...</div><p><button class="btn s" onclick="draw()">Refresh</button></p>`;

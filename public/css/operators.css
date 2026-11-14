@@ -1,0 +1,6 @@
+/* Operator screens: tables, Operator details cards on phones. */
+.ot table{width:100%}.ot th,.ot td{white-space:normal}
+@media(max-width:640px){
+.ot th:first-child,.ot td:first-child{position:static;min-width:0;max-width:none;background:none}.ot table{font-size:12px}.ot th,.ot td{padding:7px 4px}
+.rs,.rs tbody{display:block;width:100%}.rs tr.hd{display:none}.rs tr{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;padding:12px 0;border-bottom:1px solid var(--line)}.rs td{display:block;padding:0;border:0;white-space:normal}.rs td::before{content:attr(data-l);display:block;font-size:11px;color:var(--mut);font-weight:600}.rs td:nth-child(2),.rs td:nth-child(6){grid-column:1/-1}
+}

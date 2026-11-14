@@ -1,0 +1,12 @@
+/* Press entry form: hh:mm inputs, shift-off, stacked layout on phones. */
+.hm{display:inline-flex;align-items:center;gap:4px}.hm select{width:auto;min-width:62px;padding:6px 4px}.offl{display:flex;gap:6px;align-items:center;margin:0;color:var(--ink);font-weight:700}input[type=checkbox]{min-height:0!important;width:20px;height:20px}select:disabled,input:disabled{opacity:.5}
+.tm{display:flex;gap:6px;align-items:center}.tm .tx{width:86px;text-align:center;font-variant-numeric:tabular-nums}
+@media(max-width:640px){
+.et,.et tbody{display:block;width:100%}.et tr{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}.et tr.hd{display:none}
+.et th[colspan]{grid-column:1/-1;display:block;text-align:left;padding:6px 0;font-size:13px}
+.et td{display:block;padding:0;border:0}.et td:first-child{grid-column:1/-1;font-weight:700;position:static;max-width:none;min-width:0;background:none}
+.et td:nth-child(2)::before{content:"Shift A (Day)"}.et td:nth-child(3)::before{content:"Shift B (Night)"}
+.et td:nth-child(2)::before,.et td:nth-child(3)::before{display:block;font-size:11px;color:var(--mut);margin-bottom:6px;font-weight:600}
+.et td:nth-child(4){grid-column:1/-1;color:var(--mut)}.et td:nth-child(4)::before{content:"Total: "}.et td:nth-child(5){grid-column:1/-1;font-size:12px;color:var(--mut)}.et td:empty{display:none}
+.et input:not([type=checkbox]){width:100%}.tm{flex-direction:column;align-items:stretch;gap:8px}.tm .tx{width:100%}.hm{display:flex;width:100%}.hm select{flex:1;min-width:0}
+}
