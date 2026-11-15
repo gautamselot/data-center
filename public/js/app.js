@@ -22,11 +22,11 @@ function draw(){
    }
    function lgEye(b){const i=$('#lp'),s=i.type=='password';i.type=s?'text':'password';b.textContent=s?'Hide':'Show'}
    function show(h){$('#mbody').innerHTML=h;$('#modal').style.display='flex'}
-   function creds(u,p){show(`<b>Login details</b><p class="sub" style="margin-top:6px">Share these now. The password is not shown again.</p><div class="card" style="text-align:left">ID: <b>${u.id}</b>${u.ini?' (or '+u.ini+')':''}<br>Password: <b>${p}</b></div>`)}
-   function pwForm(){show(`<b>Change password</b><label style="text-align:left">New password (5 or more characters)</label><input id="np" type="password" autocomplete="new-password"><button class="btn w" onclick="chPw()">Save password</button>`)}
-   async function init(){try{const m=await api('/api/me');S.u=m.user;await load()}catch(e){S.u=null}draw()}
-   function login(){run(async()=>{try{const j=await api('/api/login',{id:$('#lu').value,pw:$('#lp').value});try{localStorage.setItem('dc_last',$('#lu').value)}catch(_){}S.u=j.user;S.err='';await load();S.tab=tabsOf(S.u)[0][0];S.ep=S.u.role=='admin'?'P10':S.u.pr[0]||'P10';S.rp=S.ep;draw()}catch(e){S.err=e.message;draw()}})}
+   function creds(u,p){show(`<b>Login details</b><p class="sub" style="margin-top:6px">Share these now. The password is not shown again. The person must set a new password at first sign-in.</p><div class="card" style="text-align:left">ID: <b>${u.id}</b>${u.ini?' (or '+u.ini+')':''}<br>Password: <b>${p}</b></div>`)}
+   function pwForm(){show(`<b>Change password</b>${S.pend?'<p class="sub" style="margin-top:6px">Set a new password to continue.</p>':''}<label style="text-align:left">New password (8 or more characters)</label><input id="np" type="password" autocomplete="new-password"><button class="btn w" onclick="chPw()">Save password</button>`)}
+   async function init(){try{const m=await api('/api/me');if(m.user.mc)throw 0;S.u=m.user;await load()}catch(e){S.u=null}draw()}
+   function login(){run(async()=>{try{const j=await api('/api/login',{id:$('#lu').value,pw:$('#lp').value});try{localStorage.setItem('dc_last',$('#lu').value)}catch(_){}S.err='';if(j.user.mc){S.pend=j.user;draw();pwForm();return}S.u=j.user;await load();S.tab=tabsOf(S.u)[0][0];S.ep=S.u.role=='admin'?'P10':S.u.pr[0]||'P10';S.rp=S.ep;draw()}catch(e){S.err=e.message;draw()}})}
    function logout(){run(async()=>{await api('/api/logout',{});S.u=null;draw()})}
-   function chPw(){const v=$('#np').value;if(v.length<5)return toast('Use at least 5 characters');run(async()=>{await api('/api/password',{pw:v});$('#modal').style.display='none';toast('Password changed')})}
+   function chPw(){const v=$('#np').value;if(v.length<8)return toast('Use at least 8 characters');run(async()=>{await api('/api/password',{pw:v});$('#modal').style.display='none';if(S.pend){S.u=S.pend;S.u.mc=0;S.pend=null;await load();S.tab=tabsOf(S.u)[0][0];S.ep=S.u.role=='admin'?'P10':S.u.pr[0]||'P10';S.rp=S.ep;draw()}toast('Password changed')})}
    init();
    if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
