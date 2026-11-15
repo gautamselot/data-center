@@ -1,2 +1,3 @@
-// Home screen: big tiles.
-V.home=()=>`<h1>Welcome, ${S.u.name.split(' ')[0]}</h1><p class="sub">Choose what you want to open.</p><div class="tiles">${tabsOf(S.u).filter(x=>x[0]!='home').map(([k,l])=>`<button class="tile" style="--tc:${TI[k][2]}" onclick="go('${k}')"><span class="ti">${TI[k][0]}</span><b>${l}</b><small>${TI[k][1]}</small></button>`).join('')}</div>`;
+// Home screen: tile list (icon, title, description). Icons come from TI in core/nav.js.
+const CHEV='<svg class="ch" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
+V.home=()=>`<h1>Welcome, ${S.u.name.split(' ')[0]}</h1><p class="sub">Choose what you want to open.</p><div class="tiles">${tabsOf(S.u).filter(x=>x[0]!='home').map(([k,l])=>`<button class="tile" onclick="go('${k}')"><span class="ti">${TI[k][0]}</span><span class="tx"><b>${l}</b><small>${TI[k][1]}</small></span>${CHEV}</button>`).join('')}</div>`;
