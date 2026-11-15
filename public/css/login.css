@@ -39,3 +39,26 @@ body.lg-on{overflow:hidden}body.lg-on header{display:none}
 .lg-form form{max-width:460px;padding:26px 20px 22px;background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:0 14px 40px rgba(0,0,0,.18)}
 .lg-form h2{font-size:22px}.lg-sub{margin-bottom:12px}
 }
+/* ID tile picker */
+.lg-pick{margin-top:8px;padding:12px;background:var(--card);border:1.5px solid var(--line);border-radius:12px;max-height:min(46dvh,340px);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.lg-pick[hidden]{display:none}
+.lg-pick h4{margin:12px 2px 8px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.lg-pick h4:first-child{margin-top:0}
+.lg-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:8px}
+.lg-tile{display:flex;flex-direction:column;align-items:center;gap:6px;min-height:80px;padding:10px 4px;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.lg-tile i{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--pri);color:var(--onpri);font-style:normal;font-weight:800;font-size:12px}
+.lg-tile small{font-size:10.5px;color:var(--mut);line-height:1.2}
+.lg-tile:active{background:var(--card)}
+.lg-tile.on{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
+@media(hover:hover){.lg-tile:hover{border-color:var(--acc)}}
+/* My account */
+.ac{max-width:560px;margin:0 auto}.ac .card+.card{margin-top:12px}
+.ac-p{display:flex;align-items:center;gap:16px;padding-bottom:14px}
+.ac-p .av{width:64px;height:64px;font-size:20px}
+.ac-n{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:6px}.ac-n b{font-size:18px;line-height:1.2;overflow-wrap:anywhere}
+.ac-d{border-top:1px solid var(--line)}
+.ac-r{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}.ac-r:last-child{border-bottom:0;padding-bottom:0}
+.ac-r span{color:var(--mut)}.ac-r b{text-align:right;overflow-wrap:anywhere}
+.ac label{margin:16px 0 7px;font-size:13px;font-weight:700;color:var(--ink)}
+.ac .lg-btn{margin-top:18px}
+.ac-out{display:block;width:100%;height:50px;margin-top:12px;font:inherit;font-weight:700;color:var(--r);background:none;border:1.5px solid var(--line);border-radius:12px;cursor:pointer}
