@@ -1,3 +1,9 @@
 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
 
 git clone https://gautamselot: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@github.com/gautamselot/data-center.git C:\DataCenter
+
+cd C:\DataCenter
+git pull
+git config --system --add safe.directory C:/DataCenter
+git remote set-url origin https://gautamselot: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@github.com/gautamselot/data-center.git
+schtasks /Create /TN "DataCenter auto-update" /TR "C:\DataCenter\tools\auto-update.bat" /SC MINUTE /MO 5 /RU SYSTEM /F

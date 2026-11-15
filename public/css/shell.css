@@ -1,0 +1,25 @@
+/* App shell: fixed header, only the content area scrolls */
+html{height:100vh;height:100dvh;overflow:hidden;overscroll-behavior:none}
+body{height:100%;min-height:0;display:flex;flex-direction:column;overflow:hidden;overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
+body.lg-on{display:block}
+header{flex:none;position:relative;top:auto;z-index:5}
+.bar{max-width:none;width:100%;flex-wrap:nowrap;gap:10px;padding:8px max(14px,calc((100% - 1150px)/2 + 16px))}
+.brand{flex:1;min-width:0}.wm{height:34px}.sp{display:none}
+.who{width:auto;order:0;border:0;padding:0;margin:0;text-align:right}
+.me{display:flex;align-items:center;gap:10px;height:44px;padding:0 14px 0 6px;border:1px solid var(--line);border-radius:99px;background:var(--bg);color:var(--ink);font-family:inherit;cursor:pointer}
+.me i{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--pri);color:var(--onpri);font-style:normal;font-weight:800;font-size:12px}
+.me span{display:flex;flex-direction:column;align-items:flex-start;text-align:left;line-height:1.15}
+.me b{display:block;margin:0;font-size:13px}.me small{color:var(--mut);font-size:11px}
+.me.on{border-color:var(--acc)}
+nav{max-width:none;width:100%;margin:0;display:flex;gap:2px;overflow-x:auto;overflow-y:hidden;border-top:1px solid var(--line);scrollbar-width:none;-ms-overflow-style:none;padding:0 max(6px,calc((100% - 1150px)/2 + 10px))}
+nav::-webkit-scrollbar{display:none}nav:empty{display:none}
+nav button{flex:none;height:46px;min-height:46px;padding:0 14px;border:0;border-bottom:3px solid transparent;background:none;color:var(--mut);font-family:inherit;font-weight:700;font-size:14px;cursor:pointer}
+nav button.on{color:var(--ink);border-color:var(--acc)}
+main{flex:1;min-height:0;width:100%;max-width:none;margin:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding:18px max(14px,calc((100% - 1150px)/2 + 16px)) calc(48px + env(safe-area-inset-bottom,0px))}
+.acct{display:flex;align-items:center;gap:14px}
+.av{flex:none;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--pri);color:var(--onpri);font-weight:800}
+@media(max-width:640px){
+.wm{height:30px}
+.me{padding:0;border:0;background:none}.me span{display:none}.me i{width:40px;height:40px;font-size:13px}
+.me.on i{box-shadow:0 0 0 3px var(--acc)}
+}

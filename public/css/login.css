@@ -1,0 +1,41 @@
+/* Login screen: split layout on desktop, card on phones */
+body.lg-on{overflow:hidden}body.lg-on header{display:none}
+.lg{position:fixed;inset:0;z-index:20;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch}
+.lg-brand{position:relative;display:flex;flex-direction:column;justify-content:center;gap:14px;padding:56px clamp(32px,6vw,88px);color:#f3efe6;overflow:hidden;
+ background:radial-gradient(900px 500px at 15% 10%,rgba(217,179,108,.24),transparent 60%),radial-gradient(700px 500px at 90% 95%,rgba(76,140,201,.20),transparent 60%),linear-gradient(160deg,#1b1e24,#2c2f36)}
+.lg-brand::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:radial-gradient(circle at 30% 30%,#000,transparent 75%);mask-image:radial-gradient(circle at 30% 30%,#000,transparent 75%)}
+.lg-brand>*{position:relative}
+.lg-logo{width:84px;height:84px;border-radius:22px;background:#fff;display:grid;place-items:center;box-shadow:0 12px 32px rgba(0,0,0,.35)}
+.lg-logo img{width:62px;height:62px;object-fit:contain}
+.lg-brand h1{font-size:clamp(30px,3.4vw,44px);line-height:1.1;margin:10px 0 0;letter-spacing:-.02em;font-weight:800}
+.lg-brand p{margin:0;color:#c9c4b8;font-size:17px}
+.lg-brand ul{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:12px}
+.lg-brand li{display:flex;gap:10px;align-items:flex-start;color:#e7e2d6;font-size:15px}
+.lg-brand li::before{content:"";flex:none;width:8px;height:8px;margin-top:7px;border-radius:50%;background:#d9b36c;box-shadow:0 0 0 4px rgba(217,179,108,.18)}
+.lg-brand small{margin-top:26px;color:#9a9da4;letter-spacing:.14em;text-transform:uppercase;font-size:12px}
+.lg-form{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;padding:40px 24px}
+.lg-form form{width:100%;max-width:400px}
+.lg-form h2{margin:0;font-size:28px;font-weight:800;letter-spacing:-.01em}
+.lg-sub{margin:6px 0 26px;color:var(--mut)}
+.lg-form label{display:block;margin:18px 0 7px;font-size:13px;font-weight:700;color:var(--ink)}
+.lg-field{position:relative}
+.lg-field select,.lg-field input{width:100%;height:52px;min-height:52px;padding:0 16px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font-family:inherit;font-size:16px;transition:border-color .15s,box-shadow .15s}
+.lg-field select{-webkit-appearance:none;appearance:none;padding-right:44px;cursor:pointer;background-repeat:no-repeat;background-position:right 16px center;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%239a9da4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.lg-field input{padding-right:78px}
+.lg-field select:focus,.lg-field input:focus{outline:0;border-color:var(--acc);box-shadow:0 0 0 4px rgba(169,124,47,.20)}
+.lg-eye{position:absolute;right:8px;top:50%;transform:translateY(-50%);height:36px;padding:0 12px;border:0;border-radius:8px;background:none;color:var(--acc);font-family:inherit;font-weight:700;font-size:13px;cursor:pointer}
+.lg-err{min-height:20px;margin-top:12px;color:var(--r);font-size:13px;font-weight:700}
+.lg-btn{width:100%;height:52px;margin-top:10px;border:0;border-radius:12px;background:var(--pri);color:var(--onpri);font-family:inherit;font-weight:800;font-size:16px;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.16);transition:transform .12s,filter .12s}
+.lg-btn:hover{filter:brightness(1.08)}.lg-btn:active{transform:translateY(1px)}
+.lg-help{margin:22px 0 0;text-align:center;font-size:13px;color:var(--mut)}
+@media(max-width:860px){
+.lg{display:flex;flex-direction:column}
+.lg-brand{flex:none;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:16px;row-gap:2px;align-content:center;padding:calc(24px + env(safe-area-inset-top,0px)) 22px 58px}
+.lg-logo{grid-row:1/3;width:60px;height:60px;border-radius:16px}.lg-logo img{width:44px;height:44px}
+.lg-brand h1{font-size:24px;margin:0;align-self:end}.lg-brand p{font-size:14px;align-self:start}
+.lg-brand ul,.lg-brand small{display:none}
+.lg-form{flex:1;align-items:flex-start;margin-top:-34px;padding:0 16px calc(24px + env(safe-area-inset-bottom,0px))}
+.lg-form form{max-width:460px;padding:26px 20px 22px;background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:0 14px 40px rgba(0,0,0,.18)}
+.lg-form h2{font-size:22px}.lg-sub{margin-bottom:12px}
+}

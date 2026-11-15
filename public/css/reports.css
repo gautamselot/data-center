@@ -1,10 +1,5 @@
-/* Reports: the cumulative table fits a phone without scrolling. */
-.cum table{table-layout:fixed;width:100%}.cum th,.cum td{white-space:normal}
-@media(max-width:640px){
-.cum table{font-size:11px}.cum th,.cum td{padding:7px 2px;text-align:center}.cum th:first-child,.cum td:first-child{position:static;min-width:0;max-width:none;background:none;text-align:left;padding-left:4px}
-}
-/* Report tables on screen: grid lines, sticky header, coloured cells */
-.rep .tw{max-height:72vh;overflow:auto;border:1px solid var(--line);border-radius:10px}
+/* Reports: bordered grid, sticky header, coloured cells. The cumulative table fits a phone. */
+.rep .tw{max-height:70vh;max-height:70dvh;min-height:240px;overflow:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
 .rep table{border-collapse:separate;border-spacing:0;font-variant-numeric:tabular-nums}
 .rep th,.rep td{padding:8px 10px;text-align:right;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
 .rep th:last-child,.rep td:last-child{border-right:0}
@@ -18,3 +13,12 @@
 .rep table:not(.cum) th:first-child,.rep table:not(.cum) td:first-child{position:sticky;left:0;z-index:1;background-color:var(--card)}
 .rep table:not(.cum) tr:first-child th:first-child{z-index:3;background-color:var(--bg)}
 .rep table:not(.cum) tr.ft td:first-child{background-color:var(--bg)}
+/* cumulative: fixed columns, no sideways scroll */
+.cum table{table-layout:fixed;width:100%}.cum th,.cum td{white-space:normal}
+.cum th:nth-child(1){width:16%}.cum th:nth-child(2){width:11%}
+.cum td:last-child{font-weight:800}
+@media(max-width:640px){
+.cum table{font-size:12.5px}
+.cum th,.cum td{padding:9px 3px;text-align:center}
+.cum th:first-child,.cum td:first-child{text-align:left;padding-left:6px}
+}
