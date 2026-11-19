@@ -23,3 +23,5 @@ main{flex:1;min-height:0;width:100%;max-width:none;margin:0;overflow-x:hidden;ov
 .me{padding:0;border:0;background:none}.me span{display:none}.me i{width:40px;height:40px;font-size:13px}
 .me.on i{box-shadow:0 0 0 3px var(--acc)}
 }
+.sl{animation:sl .22s ease-out}@keyframes sl{from{opacity:.35;transform:translateX(var(--sx,0))}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.sl{animation:none}}

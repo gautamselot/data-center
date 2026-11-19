@@ -3,4 +3,19 @@
 @media(max-width:640px){
 .ot th:first-child,.ot td:first-child{position:static;min-width:0;max-width:none;background:none}.ot table{font-size:12px}.ot th,.ot td{padding:7px 4px}
 .rs,.rs tbody{display:block;width:100%}.rs tr.hd{display:none}.rs tr{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;padding:12px 0;border-bottom:1px solid var(--line)}.rs td{display:block;padding:0;border:0;white-space:normal}.rs td::before{content:attr(data-l);display:block;font-size:11px;color:var(--mut);font-weight:600}.rs td:nth-child(2),.rs td:nth-child(6){grid-column:1/-1}
+
 }
+.oe{max-width:560px;margin:0 auto}.oe .card+.card{margin-top:12px}
+.oe-top{display:flex;align-items:center;gap:8px}.oe-top input{flex:1;text-align:center;font-weight:700}.oe-top .btn{min-width:48px;padding:0}
+.oe-lb{margin:14px 0 6px;font-size:12px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}.oe-lb:first-child{margin-top:0}
+.oe-sg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.oe-sg button,.oe-ch{font:inherit;font-weight:700;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;min-height:48px;cursor:pointer}
+.oe-sg button small{display:block;font-weight:400;font-size:11px;color:var(--mut)}
+.oe-sg button.on,.oe-ch.on{border-color:var(--acc);background:var(--card);box-shadow:inset 0 0 0 1px var(--acc)}
+.oe-chs{display:flex;flex-wrap:wrap;gap:8px}.oe-ch{padding:0 14px}
+.oe-in{height:72px;font-size:34px;font-weight:800;text-align:center;border-radius:14px}
+.oe-bar{height:10px;border-radius:99px;background:var(--line);overflow:hidden}.oe-bar i{display:block;height:100%;background:var(--acc);border-radius:99px;transition:width .3s}.oe-bar.g i{background:var(--g)}
+.oe-pr small{display:block;margin-top:6px}
+.oe-sub{position:sticky;bottom:calc(8px + env(safe-area-inset-bottom,0px));height:52px}
+.oe-l{display:grid;gap:8px}.oe-i{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:12px;background:var(--card);border:1px solid var(--line);border-radius:12px}
+.oe-i small{display:block;color:var(--mut)}.oe-o{text-align:right}.oe-o b{font-size:18px}

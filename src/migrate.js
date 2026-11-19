@@ -30,6 +30,7 @@ if(!cols('entry_meta').includes('off_a')){ex('ALTER TABLE entry_meta ADD COLUMN 
 if(!cols('users').includes('remark'))ex('ALTER TABLE users ADD COLUMN remark TEXT');
 if(!cols('users').includes('boss')){ex('ALTER TABLE users ADD COLUMN boss TEXT');
     q("SELECT id,dept FROM users WHERE role='operator' AND dept IS NOT NULL").forEach(o=>{const h=q("SELECT id FROM users WHERE role='hod' AND dept=?",o.dept);if(h.length==1)ex('UPDATE users SET boss=? WHERE id=?',h[0].id,o.id)})}
+    if(!cols('users').includes('must_change'))ex('ALTER TABLE users ADD COLUMN must_change INTEGER NOT NULL DEFAULT 0');
 
 }
 module.exports=migrate;

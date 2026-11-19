@@ -9,3 +9,11 @@ main .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr
 @media(max-width:640px){main .tiles{grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.tile{min-height:112px;padding:14px 4px;gap:10px}.ti{width:56px;height:56px}.ti svg{width:30px;height:30px}.tile b{font-size:12px}}
 @media(max-width:340px){main .tiles{grid-template-columns:1fr 1fr}}
 nav{overflow-x:auto;white-space:nowrap}
+.hx-st{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:4px 0 6px}
+.hx-st>div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.hx-st b{display:block;font-size:26px;font-weight:800;line-height:1.2}.hx-st small{color:var(--mut);font-size:12px}
+main .hx .tiles{grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin-top:14px}
+.hx .tile{min-height:150px;border-radius:14px;gap:10px;padding:18px 12px}
+.hx .tile b{font-size:15px}.hx .tile small{color:var(--mut);font-size:12px;line-height:1.3;text-align:center}
+@media(max-width:640px){main .hx .tiles{grid-template-columns:1fr 1fr;gap:10px}.hx .tile{min-height:132px;padding:14px 8px}.hx .tile b{font-size:14px}.hx-st b{font-size:22px}}
+@media(max-width:340px){main .hx .tiles{grid-template-columns:1fr}}

@@ -25,3 +25,4 @@ route('POST','/api/users/bulk','super',(u,b)=>{
   audit(u.id,`Bulk-created ${made.length} operators under ${h.id}${w?' for '+w.name:''}`);
   db.exec('COMMIT')}catch(e){db.exec('ROLLBACK');throw e}
  return{made,skipped}});
+ module.exports={inits};

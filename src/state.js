@@ -1,7 +1,7 @@
 'use strict';
 // What the browser receives from /api/state, shaped per role. pub() = the safe public view of a user.
 const {q,q1}=require('./db');const {F}=require('./config');
-const pub=u=>({sa:u.super?1:0,dept:u.dept||'',remark:u.remark||'',sup:u.sup?1:0,id:u.id,name:u.name,ini:u.ini,role:u.role,on:u.active,pr:q('SELECT press FROM hod_press WHERE user_id=?',u.id).map(x=>x.press)});
+const pub=u=>({sa:u.super?1:0,dept:u.dept||'',remark:u.remark||'',sup:u.sup?1:0,id:u.id,name:u.role=='admin'&&!u.super?u.ini:u.name,ini:u.ini,role:u.role,on:u.active,pr:q('SELECT press FROM hod_press WHERE user_id=?',u.id).map(x=>x.press)});
 function opState(u){const asg={};q('SELECT * FROM op_workplace').forEach(a=>(asg[a.user_id]=asg[a.user_id]||[]).push(a.workplace_id));const mine=asg[u.id]||[],own=u.role=='operator'&&!u.sup;
  let wps=q('SELECT * FROM workplaces ORDER BY id');if(own)wps=wps.filter(w=>mine.includes(w.id));else if(u.role=='operator'||u.role=='hod')wps=wps.filter(w=>w.dept==u.dept);
  wps=wps.map(w=>({id:w.id,dept:w.dept,name:w.name,target:w.target,mine:mine.includes(w.id)?1:0,m:q('SELECT id,name FROM machines WHERE workplace_id=? ORDER BY id',w.id)}));
