@@ -88,10 +88,10 @@ Add a line at the **end** of `migrate()` in `src/migrate.js`, e.g.
 Existing data is kept.
 
 ## Roles
-Super admin (GS) > Admin > HOD > Operator.
-- Super admin: everything, plus Team and access, Database, Backup and purge, departments, accounts.
-- Admin: Dashboard, Entry, Reports, Operators, Operator details, Targets, Audit log.
-- HOD: Dashboard, Entry (presses), Reports; with a department also Operators and Operator details.
+Admin (GS) > Management > HOD > Operator.
+- Admin (super): everything, plus Users, Add operators, Database, Backup and purge, departments, accounts.
+- Management: Press report, Dashboard, Press wise report, Entry, Targets, Operators, Operator details, Audit log.
+- HOD: Dashboard, Entry (presses), Press report, Press wise report; with a department also Operators and Operator details.
 - Operator: one Data entry screen. Supervisors also get Authorize.
 
 ## Backup, restore, purge, hosting on a server
