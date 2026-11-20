@@ -2,6 +2,7 @@
 // Super admin: create many operator accounts at once (one name per line) under one HOD or supervisor, optionally assigned to a workplace.
 const {db,q1,ex,cols}=require('../db');
 const {now,audit,hash,rpw,uid,bad}=require('../util');
+const {DEFAULT_PW}=require('../config');
 const {route}=require('../router');
 const L=s=>s.replace(/[^A-Za-z]/g,'').toUpperCase();
 const taken=x=>!!q1('SELECT 1 x FROM users WHERE lower(ini)=? OR lower(id)=?',x.toLowerCase(),x.toLowerCase());
@@ -17,7 +18,7 @@ route('POST','/api/users/bulk','super',(u,b)=>{
  db.exec('BEGIN');try{
   for(const n of names){
    if(q1('SELECT 1 x FROM users WHERE lower(name)=?',n.toLowerCase())){skipped.push(n);continue}
-   const id=uid(n),ini=inits(n),p=rpw();
+   const id=uid(n),ini=inits(n),p=DEFAULT_PW;
    ex("INSERT INTO users(id,name,ini,role,pw_hash,active,created_at,dept,sup) VALUES(?,?,?,'operator',?,1,?,?,0)",id,n,ini,hash(p),now(),h.dept);
    if(hasBoss)ex('UPDATE users SET boss=? WHERE id=?',h.id,id);
       ex('UPDATE users SET must_change=1 WHERE id=?',id);

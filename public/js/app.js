@@ -39,7 +39,7 @@ function lgEye(b){const i=$('#lp'),s=i.type=='password';i.type=s?'text':'passwor
 function show(h){$('#mbody').innerHTML=h;$('#modal').style.display='flex'}
 // Confirmation dialog: ask('Question?', fn, 'Button label')
 function ask(m,fn,l='Confirm'){window._ask=fn;show(`<b>${lgEsc(m)}</b><div style="margin-top:14px;display:flex;gap:8px;justify-content:center"><button class="btn s" onclick="$('#modal').style.display='none'">Cancel</button><button class="btn" onclick="$('#modal').style.display='none';_ask()">${lgEsc(l)}</button></div>`)}
-function creds(u,p){show(`<b>Login details</b><p class="sub" style="margin-top:6px">Share these now. The password is not shown again. The person must set a new password at first sign-in.</p><div class="card" style="text-align:left">ID: <b>${u.id}</b>${u.ini?' (or '+u.ini+')':''}<br>Password: <b>${p}</b></div>`)}
+function creds(u,p){show(`<b>Login details</b><p class="sub" style="margin-top:6px">Default password. They can change it under My account.</p><div class="card" style="text-align:left">ID: <b>${u.id}</b>${u.ini?' (or '+u.ini+')':''}<br>Password: <b>${p}</b></div>`)}
 function pwForm(){show(`<b>Change password</b>${S.pend?'<p class="sub" style="margin-top:6px">Set a new password to continue.</p>':''}<label style="text-align:left">New password (8 or more characters)</label><input id="np" type="password" autocomplete="new-password"><button class="btn w" onclick="chPw()">Save password</button>`)}
 async function init(){try{const m=await api('/api/me');if(m.user.mc)throw 0;S.u=m.user;await load()}catch(e){S.u=null}draw()}
 function login(){const id=$('#lu').value.trim();if(!id){S.err='Choose or type your ID.';draw();return}
