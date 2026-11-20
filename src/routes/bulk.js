@@ -21,7 +21,6 @@ route('POST','/api/users/bulk','super',(u,b)=>{
    const id=uid(n),ini=inits(n),p=DEFAULT_PW;
    ex("INSERT INTO users(id,name,ini,role,pw_hash,active,created_at,dept,sup) VALUES(?,?,?,'operator',?,1,?,?,0)",id,n,ini,hash(p),now(),h.dept);
    if(hasBoss)ex('UPDATE users SET boss=? WHERE id=?',h.id,id);
-      ex('UPDATE users SET must_change=1 WHERE id=?',id);
    if(w)ex('INSERT OR IGNORE INTO op_workplace VALUES(?,?)',id,w.id);
    made.push({name:n,id,ini,password:p})}
   audit(u.id,`Bulk-created ${made.length} operators under ${h.id}${w?' for '+w.name:''}`);
