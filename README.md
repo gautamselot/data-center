@@ -6,7 +6,7 @@ Press production entry, reports and the operator module. Zero dependencies. Need
 - `node server.js`  (or double-click `start.bat`)
 - While you are editing code: `npm run dev` restarts the server by itself when you save a file.
 - Phone link (tunnel) too: `start-all.bat`
-- Open http://localhost:3000. Sign in with initials. Default password `12345` (change it).
+- Open http://localhost:3000. Sign in with initials. Default password `Data@987` (change it under My account).
 
 ## Folder map
 ```

@@ -2,7 +2,7 @@ DATA CENTER - quick guide
 START:   open a terminal in this folder and run:  node server.js     (or: npm start)
 OPEN:    http://localhost:3000   (phones: the address printed in the terminal, or your tunnel link)
 STOP:    Ctrl+C in the terminal
-LOGIN:   choose your initials, enter password (default 12345 - change it after first login)
+LOGIN:   choose your initials, enter password (default Data@987 - change it under My account)
 
 ROLES:   Admin (GS) > Management > HOD > Operator
   Admin      : everything, plus Users, Add operators, Database, Backup and purge

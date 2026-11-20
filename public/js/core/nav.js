@@ -6,7 +6,7 @@ const TABS={
  hodd:[['home','Home'],['dash','Dashboard'],['entry','Entry'],['crep','Press report'],['rep','Press wise report'],['ops','Operators'],['roster','Operator details']],
  op:[['oentry','Data entry']],sup:[['oentry','Data entry'],['oauth','Authorize']]};
 // Tiles shown on Home (in this order) for Management (mgt) and Admin (sa). Other roles show every tab.
-const HOMEK={mgt:['crep','dash','rep'],sa:['crep','dash','maint','rep']};
+const HOMEK={mgt:['crep','dash','rep'],sa:['crep','dash','maint','rep','bulk']};
 const RL=u=>u.sa?'Admin':u.role=='admin'?'Management':u.role=='operator'?(u.sup?'Supervisor':'Operator'):'HOD';
 const tabsOf=u=>u.role=='operator'?(u.sup?TABS.sup:TABS.op):u.role=='hod'?(u.dept?TABS.hodd:TABS.hod):u.sa?TABS.sa:TABS.admin;
 const go=t=>{if(S.u&&(t=='acct'||tabsOf(S.u).some(x=>x[0]==t))){const a=tabsOf(S.u).map(x=>x[0]);S.dir=(S.tab=='acct'||t=='acct')?0:Math.sign(a.indexOf(t)-a.indexOf(S.tab));S.tab=t;draw();$('#app').scrollTop=0}};
