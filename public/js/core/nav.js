@@ -1,23 +1,25 @@
-// NAVIGATION. To add a screen: add [key,'Label'] to the role lists in TABS, a tile in TI, and a V.key view file.
-const TABS={
- admin:[['home','Home'],['crep','Press report'],['dash','Dashboard'],['rep','Press wise report'],['entry','Entry'],['tgt','Targets'],['ops','Operators'],['roster','Operator details'],['aud','Audit log']],
- sa:[['home','Home'],['crep','Press report'],['dash','Dashboard'],['maint','Backup and purge'],['rep','Press wise report'],['entry','Entry'],['tgt','Targets'],['team','Users'],['bulk','Add operators'],['ops','Operators'],['roster','Operator details'],['aud','Audit log'],['db','Database']],
- hod:[['home','Home'],['dash','Dashboard'],['entry','Entry'],['crep','Press report'],['rep','Press wise report']],
- hodd:[['home','Home'],['dash','Dashboard'],['entry','Entry'],['crep','Press report'],['rep','Press wise report'],['ops','Operators'],['roster','Operator details']],
- op:[['oentry','Data entry']],sup:[['oentry','Data entry'],['oauth','Authorize']]};
-// Tiles shown on Home (in this order) for Management (mgt) and Admin (sa). Other roles show every tab.
-const HOMEK={mgt:['crep','dash','rep'],sa:['crep','dash','maint','rep','bulk']};
-const RL=u=>u.sa?'Admin':u.role=='admin'?'Management':u.role=='operator'?(u.sup?'Supervisor':'Operator'):'HOD';
-const tabsOf=u=>u.role=='operator'?(u.sup?TABS.sup:TABS.op):u.role=='hod'?(u.dept?TABS.hodd:TABS.hod):u.sa?TABS.sa:TABS.admin;
-const go=t=>{if(S.u&&(t=='acct'||tabsOf(S.u).some(x=>x[0]==t))){const a=tabsOf(S.u).map(x=>x[0]);S.dir=(S.tab=='acct'||t=='acct')?0:Math.sign(a.indexOf(t)-a.indexOf(S.tab));S.tab=t;draw();$('#app').scrollTop=0}};
+// NAVIGATION. MODS = the 5 modules (live=1 are built). GRP(u) = top-bar groups with sub-screens; tabsOf(u) = every screen u may open; vw(t) renders one.
 const IC=p=>`<svg viewBox="0 0 24 24" aria-hidden="true">${p}</svg>`;
-const TI={dash:[IC('<path d="M3 21h18M6 21V11M11 21V5M16 21v-8M21 21V8"/>'),'Production vs target','#2f6fb5'],crep:[IC('<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'),'All presses, day by day','#c27a12'],entry:[IC('<rect x="5" y="4" width="14" height="17" rx="1"/><path d="M9 4h6v3H9zM8 12h8M8 16h5"/>'),'Log shift hours and output','#2a8a55'],rep:[IC('<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>'),'One press, day by day','#8a6a1f'],tgt:[IC('<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><path d="M12 12h.01"/>'),'Set daily press targets','#6f4fc2'],team:[IC('<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 5.5a3 3 0 0 1 0 5.5M18 14.5c1.8.8 3 2.6 3 5.5"/>'),'Accounts and access','#1b8f91'],bulk:[IC('<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M19 8v6M16 11h6"/>'),'Create many operators','#1b8f91'],aud:[IC('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'),'Who did what, and when','#55697c'],db:[IC('<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/>'),'Read-only tables','#3d5a73'],oentry:[IC('<rect x="4" y="4" width="16" height="16" rx="1"/><path d="M12 8v8M8 12h8"/>'),'Enter your shift output','#2a8a55'],oauth:[IC('<path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5L16 9.5"/>'),'Authorize entries','#2f6fb5'],roster:[IC('<rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="9" cy="11" r="2"/><path d="M6 16c.5-1.7 1.7-2.5 3-2.5s2.5.8 3 2.5M14 10h4M14 14h4"/>'),'People and workplaces','#6f4fc2'],maint:[IC('<path d="M5 3h12l3 3v15H5z"/><path d="M8 3v5h8V3M8 21v-7h8v7"/>'),'Backups and purge','#c4453f'],ops:[IC('<path d="M3 21V9l6 4V9l6 4V4h4v17z"/>'),'Operator entries','#c0601d']};
-const goHome=()=>{if(!S.u)return;const a=tabsOf(S.u).map(x=>x[0]);go(a.includes('home')?'home':a[0])};
-function slideIn(){const a=$('#app');if(!S.dir)return;a.style.setProperty('--sx',S.dir*28+'px');a.classList.remove('sl');void a.offsetWidth;a.classList.add('sl');S.dir=0}
-// Phone swipe between tabs. SWIPE=1: swipe right = next tab (Home -> next). Set -1 to reverse.
-const SWIPE=1;
-(()=>{let x0,y0,t0,ok=false;const blk=e=>e.target.closest('.tw,.rp-sc,.lg,input,select,textarea,nav,header,#modal');
- document.addEventListener('touchstart',e=>{const t=e.touches[0];ok=e.touches.length==1&&!!S.u&&!blk(e)&&$('#modal').style.display!='flex';x0=t.clientX;y0=t.clientY;t0=Date.now()},{passive:true});
- document.addEventListener('touchend',e=>{if(!ok)return;ok=false;const t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;if(Math.abs(dx)<70||Math.abs(dx)<1.6*Math.abs(dy)||Date.now()-t0>700)return;
-  const o=$('#oa');if(S.tab=='entry'||(o&&o.value!==o.defaultValue))return;
-  const a=tabsOf(S.u).map(x=>x[0]),i=a.indexOf(S.tab);if(i<0)return;const n=a[i+(dx>0?SWIPE:-SWIPE)];if(n)go(n)},{passive:true})})();
+const BELL=IC('<path d="M6 17h12l-1.5-2V11a4.5 4.5 0 0 0-9 0v4zM10 20a2 2 0 0 0 4 0"/>');
+const MODS=[['press','Press Production',1,'#2f6fb5',IC('<path d="M4 21h16M7 21V9h10v12M12 3v6M9 6l3 3 3-3"/>')],
+ ['disp','Daily Dispatches',0,'#55697c',IC('<path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>')],
+ ['house','Housing Correction',1,'#c0601d',IC('<path d="M3 21V9l6 4V9l6 4V4h4v17z"/>')],
+ ['mach','Machine Shop',0,'#55697c',IC('<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>')],
+ ['found','Foundry Production',0,'#55697c',IC('<path d="M5 8h14l-2 11H7zM9 8V5M15 8V5M8 13h8"/>')]];
+const RL=u=>u.sa?'Super admin':u.role=='admin'?'Admin':u.role=='operator'?(u.sup?'Supervisor':'Operator'):'HOD';
+const GRP=u=>{const has=m=>(u.mods||[]).includes(m),adm=u.role=='admin',mg=adm||(u.role=='hod'&&!!u.dept),W=(S.op&&S.op.wps)||[];
+ const press=[['dash','Dashboard']];if(u.role!='operator')press.push(['entry','Entry']);press.push(['repp','Press report'],['repc','Cumulative report']);if(adm)press.push(['tgt','Targets']);
+ const hs=[];if(mg||u.sup)hs.push(['oauth',u.role=='operator'?'Authorize':'Overview']);W.forEach(w=>hs.push(['hw'+w.id,w.name]));if(!W.length)hs.push(['hw0','Workplaces']);
+ const g=MODS.map(([k,l,live])=>{const on=!!live&&has(k);return{k,l,live,on,vis:u.role!='operator'||on,subs:k=='press'?press:k=='house'?hs:[]}});
+ const x=(k,l,subs,show)=>{if(show)g.push({k,l,live:1,on:true,vis:true,subs})};
+ x('users','User Management',u.sa?[['team','Accounts'],['ops','Operators'],['roster','Operator details']]:[['ops','Operators'],['roster','Operator details']],u.sa||(mg&&has('house')));
+ x('aud','Audit log',[['aud','Audit log']],adm);x('bulk','Add operators',[['bulk','Add operators']],!!u.sa);x('db','Database',[['db','Database']],!!u.sa);x('maint','Backup and purge',[['maint','Backup and purge']],!!u.sa);
+ return g};
+const tabsOf=u=>{const l=GRP(u).filter(g=>g.on).flatMap(g=>g.subs);return u.role!='operator'?[['home','Home'],...l]:l.length?l:[['home','Home']]};
+const go=t=>{if(S.u&&(t=='acct'||tabsOf(S.u).some(x=>x[0]==t))){S.tab=t;draw();$('#app').scrollTop=0}};
+const vw=t=>{if(t=='repp'||t=='repc'){S.rt=t=='repc'?'c':'p';return V.rep()}return /^hw\d+$/.test(t)?V.hw(+t.slice(2)):V[t]()};
+// Header pop-ups: bell (notifications, empty for now) and account menu.
+function menu(k){const p=$('#pop');if(!p.hidden&&p.dataset.k==k){p.hidden=true;return}p.dataset.k=k;
+ p.innerHTML=k=='n'?'<b>Notifications</b><p class="sub" style="margin:8px 0 0">Nothing yet. Alerts will appear here.</p>':`<div class="pu"><b>${S.u.name}</b><small>${RL(S.u)}</small></div><button onclick="menuGo('acct')">My account</button><button class="out" onclick="logout()">Sign out</button>`;p.hidden=false}
+function menuGo(t){$('#pop').hidden=true;go(t)}
+document.addEventListener('click',e=>{const p=$('#pop');if(p&&!p.hidden&&!e.target.closest('#pop,.bell,.me'))p.hidden=true});

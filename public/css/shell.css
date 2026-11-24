@@ -25,3 +25,15 @@ main{flex:1;min-height:0;width:100%;max-width:none;margin:0;overflow-x:hidden;ov
 }
 .sl{animation:sl .22s ease-out}@keyframes sl{from{opacity:.35;transform:translateX(var(--sx,0))}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.sl{animation:none}}
+.brh{display:block;padding:0;border:0;background:none;cursor:pointer}
+nav button:disabled{opacity:.45;cursor:not-allowed}
+#sub{background:var(--bg)}
+#sub button{height:40px;min-height:40px;font-size:13px;font-weight:600}
+.tb{position:relative;display:flex;align-items:center;justify-content:flex-end;gap:8px}
+.bell{width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:var(--bg);color:var(--ink);cursor:pointer}
+.bell svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.pop{position:absolute;right:0;top:calc(100% + 8px);z-index:40;width:230px;padding:10px;background:var(--card);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.18);text-align:left}
+.pop[hidden]{display:none}
+.pop .pu{display:flex;flex-direction:column;padding:2px 8px 10px;margin-bottom:6px;border-bottom:1px solid var(--line)}.pop .pu small{color:var(--mut)}
+.pop button{display:block;width:100%;min-height:44px;padding:0 8px;border:0;border-radius:6px;background:none;color:var(--ink);font:inherit;font-weight:600;text-align:left;cursor:pointer}
+.pop button:hover{background:var(--bg)}.pop .out{color:var(--r)}

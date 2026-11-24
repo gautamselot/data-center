@@ -38,5 +38,15 @@ ex("INSERT OR IGNORE INTO workplaces(dept,name) SELECT 'Housing','Ageing' WHERE 
 ['Flatness','Ageing','Cutting','Press Brake','Hydraulic Press','Hand Press'].forEach((n,i)=>ex("UPDATE workplaces SET pos=? WHERE dept='Housing' AND name=?",i+1,n));
 q("SELECT m.id,m.name FROM machines m JOIN workplaces w ON w.id=m.workplace_id WHERE w.dept='Housing' AND w.name='Cutting' AND m.name LIKE 'M/c - %'").forEach(m=>ex('UPDATE machines SET name=? WHERE id=?','Cutting Machine '+m.name.slice(-1),m.id));
 
+// (from before) Housing workplaces: order, Hydraulic Press, Ageing, Cutting Machine 1/2/3
+if(!cols('workplaces').includes('pos'))ex('ALTER TABLE workplaces ADD COLUMN pos INTEGER NOT NULL DEFAULT 999');
+ex("UPDATE workplaces SET name='Hydraulic Press' WHERE dept='Housing' AND name='Hydl Press' AND NOT EXISTS(SELECT 1 FROM workplaces WHERE dept='Housing' AND name='Hydraulic Press')");
+ex("INSERT OR IGNORE INTO workplaces(dept,name) SELECT 'Housing','Ageing' WHERE EXISTS(SELECT 1 FROM departments WHERE name='Housing')");
+['Flatness','Ageing','Cutting','Press Brake','Hydraulic Press','Hand Press'].forEach((n,i)=>ex("UPDATE workplaces SET pos=? WHERE dept='Housing' AND name=?",i+1,n));
+q("SELECT m.id,m.name FROM machines m JOIN workplaces w ON w.id=m.workplace_id WHERE w.dept='Housing' AND w.name='Cutting' AND m.name LIKE 'M/c - %'").forEach(m=>ex('UPDATE machines SET name=? WHERE id=?','Cutting Machine '+m.name.slice(-1),m.id));
+// per-person module access + Flatness rows
+if(!cols('users').includes('mods'))ex('ALTER TABLE users ADD COLUMN mods TEXT');
+db.exec(`CREATE TABLE IF NOT EXISTS flat_rows(id INTEGER PRIMARY KEY AUTOINCREMENT,date TEXT NOT NULL,shift TEXT NOT NULL CHECK(shift IN('A','B')),workplace_id INTEGER NOT NULL,operator TEXT NOT NULL,section TEXT NOT NULL,unit REAL NOT NULL,cl REAL NOT NULL,pcs REAL NOT NULL,wt REAL NOT NULL DEFAULT 0,opv REAL NOT NULL DEFAULT 0,fin INTEGER NOT NULL);CREATE INDEX IF NOT EXISTS flat_k ON flat_rows(date,shift,workplace_id,operator)`);
+
 }
 module.exports=migrate;

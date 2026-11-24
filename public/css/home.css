@@ -21,3 +21,7 @@ main .hx .tiles{grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14
 .tile:disabled{opacity:.5;cursor:not-allowed}
 .tile:disabled .ti{background:var(--mut)}
 @media(hover:hover){.tile:disabled:hover{background:var(--card);border-color:var(--line)}}
+.tile small{font-size:11px}
+.tile:disabled{opacity:.5;cursor:not-allowed}
+.tile:disabled .ti{background:var(--mut)}
+@media(hover:hover){.tile:disabled:hover{background:var(--card);border-color:var(--line)}}
