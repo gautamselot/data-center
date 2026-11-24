@@ -8,7 +8,7 @@ const MODS=[['press','Press Production',1,'#2f6fb5',IC('<path d="M4 21h16M7 21V9
  ['found','Foundry Production',0,'#55697c',IC('<path d="M5 8h14l-2 11H7zM9 8V5M15 8V5M8 13h8"/>')]];
 const RL=u=>u.sa?'Super admin':u.role=='admin'?'Admin':u.role=='operator'?(u.sup?'Supervisor':'Operator'):'HOD';
 const GRP=u=>{const has=m=>(u.mods||[]).includes(m),adm=u.role=='admin',mg=adm||(u.role=='hod'&&!!u.dept),W=(S.op&&S.op.wps)||[];
- const press=[['dash','Dashboard']];if(u.role!='operator')press.push(['entry','Entry']);press.push(['repp','Press report'],['repc','Cumulative report']);if(adm)press.push(['tgt','Targets']);
+ const press=[['dash','Dashboard'],['repc','Press report']];if(u.role!='operator')press.push(['entry','Entry']);press.push(['repp','Press wise report']);if(adm)press.push(['tgt','Targets']);
  const hs=[];if(mg||u.sup)hs.push(['oauth',u.role=='operator'?'Authorize':'Overview']);W.forEach(w=>hs.push(['hw'+w.id,w.name]));if(!W.length)hs.push(['hw0','Workplaces']);
  const g=MODS.map(([k,l,live])=>{const on=!!live&&has(k);return{k,l,live,on,vis:u.role!='operator'||on,subs:k=='press'?press:k=='house'?hs:[]}});
  const x=(k,l,subs,show)=>{if(show)g.push({k,l,live:1,on:true,vis:true,subs})};
@@ -17,7 +17,7 @@ const GRP=u=>{const has=m=>(u.mods||[]).includes(m),adm=u.role=='admin',mg=adm||
  return g};
 const tabsOf=u=>{const l=GRP(u).filter(g=>g.on).flatMap(g=>g.subs);return u.role!='operator'?[['home','Home'],...l]:l.length?l:[['home','Home']]};
 const go=t=>{if(S.u&&(t=='acct'||tabsOf(S.u).some(x=>x[0]==t))){S.tab=t;draw();$('#app').scrollTop=0}};
-const vw=t=>{if(t=='repp'||t=='repc'){S.rt=t=='repc'?'c':'p';return V.rep()}return /^hw\d+$/.test(t)?V.hw(+t.slice(2)):V[t]()};
+const vw=t=>{if(t=='repp')return V.rep();if(t=='repc')return V.crep();return /^hw\d+$/.test(t)?V.hw(+t.slice(2)):V[t]()};
 // Header pop-ups: bell (notifications, empty for now) and account menu.
 function menu(k){const p=$('#pop');if(!p.hidden&&p.dataset.k==k){p.hidden=true;return}p.dataset.k=k;
  p.innerHTML=k=='n'?'<b>Notifications</b><p class="sub" style="margin:8px 0 0">Nothing yet. Alerts will appear here.</p>':`<div class="pu"><b>${S.u.name}</b><small>${RL(S.u)}</small></div><button onclick="menuGo('acct')">My account</button><button class="out" onclick="logout()">Sign out</button>`;p.hidden=false}

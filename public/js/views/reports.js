@@ -43,8 +43,7 @@ const rpTbl=(M,rc=[])=>`<table class="rp-t ${M.cls?'rp-c':'rp-p'}"><thead><tr>${
 const repV=m=>{S.rt=m;const c=m=='c',ps=S.u.role=='admin'?PID:S.u.pr;if(!c&&!ps.includes(S.rp))S.rp=ps[0]||S.rp;
  const none=!c&&!ps.length,M=none?null:curModel(),sel=c?PID:[S.rp],rc=mdays(S.mo).map(d=>d==TD?'rp-today':d>TD?'rp-fut':sel.every(p=>tg(d,p)==0)?'rp-off':'');
  return `<h1>${c?'Press report':'Press wise report'}</h1><p class="sub">Output is green when the target is met and red when it is not.</p>
-
- ${c?'':`<div><label style="margin-top:0">Press</label><select onchange="S.rp=this.value;draw()">${ps.map(x=>`<option value="${x}" ${x==S.rp?'selected':''}>${pl(x)}</option>`).join('')}</select></div>`}
+ <div class="card"><div class="rp-ctl">${c?'':`<div><label style="margin-top:0">Press</label><select onchange="S.rp=this.value;draw()">${ps.map(x=>`<option value="${x}" ${x==S.rp?'selected':''}>${pl(x)}</option>`).join('')}</select></div>`}
  <div><label style="margin-top:0">Month</label><input type="month" value="${S.mo}" onchange="S.mo=this.value||S.mo;draw()"></div></div>
  ${none?'':'<div class="rp-act"><button class="btn s" onclick="xl()">Excel</button><button class="btn s" onclick="prt()">Printable report (PDF)</button></div>'}</div>
  ${none?'<p class="sub" style="margin-top:12px">No presses are assigned to you. Ask an admin.</p>':`<div class="card rp-card"><div class="rp-hd"><b>${M.title}</b><p class="sub">${M.sub}</p></div>${c?rpTbl(M,rc):`<div class="rp-sc">${rpTbl(M,rc)}</div>`}</div>`}`};

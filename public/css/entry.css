@@ -10,3 +10,5 @@
 .et td:nth-child(4){grid-column:1/-1;color:var(--mut)}.et td:nth-child(4)::before{content:"Total: "}.et td:nth-child(5){grid-column:1/-1;font-size:12px;color:var(--mut)}.et td:empty{display:none}
 .et input:not([type=checkbox]){width:100%}.tm{flex-direction:column;align-items:stretch;gap:8px}.tm .tx{width:100%}.hm{display:flex;width:100%}.hm select{flex:1;min-width:0}
 }
+
+.et input[type=number]::-webkit-inner-spin-button,.et input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}.et input[type=number]{-moz-appearance:textfield;appearance:textfield}
