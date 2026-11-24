@@ -10,7 +10,7 @@ if(!q1('SELECT 1 x FROM users')){
  audit('system','Database created with 5 presses and 8 users')}
 ex("UPDATE users SET super=1 WHERE id='gautam.selot'");
 if(!q1('SELECT 1 x FROM departments')){ex("INSERT INTO departments VALUES('Housing')");
- [['Flatness',1050,[]],['Hand Press',540,[]],['Cutting',null,['M/c - 1','M/c - 2','M/c - 3']],['Press Brake',null,[]],['Hydl Press',null,[]]].forEach(([n,t,ms])=>{const id=ex('INSERT INTO workplaces(dept,name,target) VALUES(?,?,?)','Housing',n,t).lastInsertRowid;ms.forEach(m=>ex('INSERT INTO machines(workplace_id,name) VALUES(?,?)',id,m))});
+  [['Flatness',1050,[]],['Ageing',null,[]],['Cutting',null,['Cutting Machine 1','Cutting Machine 2','Cutting Machine 3']],['Press Brake',null,[]],['Hydraulic Press',null,[]],['Hand Press',540,[]]].forEach(([n,t,ms],i)=>{const id=ex('INSERT INTO workplaces(dept,name,target,pos) VALUES(?,?,?,?)','Housing',n,t,i+1).lastInsertRowid;ms.forEach(m=>ex('INSERT INTO machines(workplace_id,name) VALUES(?,?)',id,m))});
  ex("UPDATE users SET dept='Housing' WHERE id='chandrashekhar.thorat'")}
 
  // One-time Housing operators (Housing_Correction.xlsx). Skips names that already exist. Password: the default (Data@987).

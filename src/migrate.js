@@ -32,5 +32,11 @@ if(!cols('users').includes('boss')){ex('ALTER TABLE users ADD COLUMN boss TEXT')
     q("SELECT id,dept FROM users WHERE role='operator' AND dept IS NOT NULL").forEach(o=>{const h=q("SELECT id FROM users WHERE role='hod' AND dept=?",o.dept);if(h.length==1)ex('UPDATE users SET boss=? WHERE id=?',h[0].id,o.id)})}
     if(!cols('users').includes('must_change'))ex('ALTER TABLE users ADD COLUMN must_change INTEGER NOT NULL DEFAULT 0');
 
+if(!cols('workplaces').includes('pos'))ex('ALTER TABLE workplaces ADD COLUMN pos INTEGER NOT NULL DEFAULT 999');
+ex("UPDATE workplaces SET name='Hydraulic Press' WHERE dept='Housing' AND name='Hydl Press' AND NOT EXISTS(SELECT 1 FROM workplaces WHERE dept='Housing' AND name='Hydraulic Press')");
+ex("INSERT OR IGNORE INTO workplaces(dept,name) SELECT 'Housing','Ageing' WHERE EXISTS(SELECT 1 FROM departments WHERE name='Housing')");
+['Flatness','Ageing','Cutting','Press Brake','Hydraulic Press','Hand Press'].forEach((n,i)=>ex("UPDATE workplaces SET pos=? WHERE dept='Housing' AND name=?",i+1,n));
+q("SELECT m.id,m.name FROM machines m JOIN workplaces w ON w.id=m.workplace_id WHERE w.dept='Housing' AND w.name='Cutting' AND m.name LIKE 'M/c - %'").forEach(m=>ex('UPDATE machines SET name=? WHERE id=?','Cutting Machine '+m.name.slice(-1),m.id));
+
 }
 module.exports=migrate;
