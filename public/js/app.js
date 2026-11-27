@@ -31,7 +31,7 @@ function draw(){
  $('#nav').innerHTML=gs.length<2?'':gs.map(g=>g.on?`<button class="${ag&&ag.k==g.k?'on':''}" onclick="go('${g.subs[0][0]}')">${g.l}</button>`:`<button disabled title="${g.live?'No access':'Coming soon'}">${g.l}</button>`).join('');
  $('#sub').innerHTML=ag&&ag.subs.length>1?ag.subs.map(([k,l])=>`<button class="${S.tab==k?'on':''}" onclick="go('${k}')">${l}</button>`).join(''):'';
  document.querySelectorAll('#nav .on,#sub .on').forEach(b=>b.scrollIntoView({inline:'center',block:'nearest'}));
- $('#app').innerHTML=vw(S.tab);if(S.tab=='entry'){['A','B'].forEach(s=>{const c=$('#off'+s);if(c&&c.checked)offchg(s)});calc()}if(S.tab=='db')loadDb();if(S.tab=='maint')loadBk();
+ $('#app').innerHTML=vw(S.tab);if(S.tab=='entry'){['A','B'].forEach(s=>{const c=$('#off'+s);if(c&&c.checked)offchg(s)});calc()}if(S.tab=='db')loadDb();if(S.tab=='maint')loadBk();if(S.tab=='req')loadRq();
 }
 function lgEye(b){const i=$('#lp'),s=i.type=='password';i.type=s?'text':'password';b.textContent=s?'Hide':'Show'}
 function show(h){$('#mbody').innerHTML=h;$('#modal').style.display='flex'}

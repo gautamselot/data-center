@@ -14,6 +14,7 @@ const GRP=u=>{const has=m=>(u.mods||[]).includes(m),adm=u.role=='admin',mg=adm||
  const x=(k,l,subs,show)=>{if(show)g.push({k,l,live:1,on:true,vis:true,subs})};
  x('users','User Management',u.sa?[['team','Accounts'],['ops','Operators'],['roster','Operator details']]:[['ops','Operators'],['roster','Operator details']],u.sa||(mg&&has('house')));
  x('aud','Audit log',[['aud','Audit log']],adm);x('bulk','Add operators',[['bulk','Add operators']],!!u.sa);x('db','Database',[['db','Database']],!!u.sa);x('maint','Backup and purge',[['maint','Backup and purge']],!!u.sa);
+ x('req','Requests',[['req','Requests']],adm);
  return g};
 const tabsOf=u=>{const l=GRP(u).filter(g=>g.on).flatMap(g=>g.subs);return u.role!='operator'?[['home','Home'],...l]:l.length?l:[['home','Home']]};
 const go=t=>{if(S.u&&(t=='acct'||tabsOf(S.u).some(x=>x[0]==t))){S.tab=t;draw();$('#app').scrollTop=0}};

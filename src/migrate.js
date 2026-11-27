@@ -47,6 +47,7 @@ q("SELECT m.id,m.name FROM machines m JOIN workplaces w ON w.id=m.workplace_id W
 // per-person module access + Flatness rows
 if(!cols('users').includes('mods'))ex('ALTER TABLE users ADD COLUMN mods TEXT');
 db.exec(`CREATE TABLE IF NOT EXISTS flat_rows(id INTEGER PRIMARY KEY AUTOINCREMENT,date TEXT NOT NULL,shift TEXT NOT NULL CHECK(shift IN('A','B')),workplace_id INTEGER NOT NULL,operator TEXT NOT NULL,section TEXT NOT NULL,unit REAL NOT NULL,cl REAL NOT NULL,pcs REAL NOT NULL,wt REAL NOT NULL DEFAULT 0,opv REAL NOT NULL DEFAULT 0,fin INTEGER NOT NULL);CREATE INDEX IF NOT EXISTS flat_k ON flat_rows(date,shift,workplace_id,operator)`);
+db.exec(`CREATE TABLE IF NOT EXISTS requests(id INTEGER PRIMARY KEY AUTOINCREMENT,text TEXT NOT NULL,photo TEXT,status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN('pending','ongoing','completed')),created_by TEXT NOT NULL,at TEXT NOT NULL,done_at TEXT)`);
 
 }
 module.exports=migrate;
