@@ -6,7 +6,7 @@ const MODS=[['press','Press Production',1,'#2f6fb5',IC('<path d="M4 21h16M7 21V9
  ['house','Housing Correction',1,'#c0601d',IC('<path d="M3 21V9l6 4V9l6 4V4h4v17z"/>')],
  ['mach','Machine Shop',0,'#55697c',IC('<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>')],
  ['found','Foundry Production',0,'#55697c',IC('<path d="M5 8h14l-2 11H7zM9 8V5M15 8V5M8 13h8"/>')]];
-const RL=u=>u.sa?'Super admin':u.role=='admin'?'Admin':u.role=='operator'?(u.sup?'Supervisor':'Operator'):'HOD';
+const RL=u=>u.sa?'Admin':u.role=='admin'?'Management':u.role=='operator'?(u.sup?'Supervisor':'Operator'):'HOD';
 const GRP=u=>{const has=m=>(u.mods||[]).includes(m),adm=u.role=='admin',mg=adm||(u.role=='hod'&&!!u.dept),W=(S.op&&S.op.wps)||[];
  const press=[['dash','Dashboard'],['repc','Press report']];if(u.role!='operator')press.push(['entry','Entry']);press.push(['repp','Press wise report']);if(adm)press.push(['tgt','Targets']);
  const hs=[];if(mg||u.sup)hs.push(['oauth',u.role=='operator'?'Authorize':'Overview']);W.forEach(w=>hs.push(['hw'+w.id,w.name]));if(!W.length)hs.push(['hw0','Workplaces']);

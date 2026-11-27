@@ -1,9 +1,10 @@
 // App shell: draw() renders header, nav and the current view. Login (tile ID picker + manual ID), logout, password, popups, startup.
 const lgEsc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const LGR={sa:'Super admin',admin:'Admin',hod:'HOD',operator:'Operator'};
-function lgTiles(f){const P=(S.people||[]).filter(p=>!f||p.ini.toLowerCase().includes(f.toLowerCase())),sel=(S.sel||'').toLowerCase();
- const grp=(l,fn)=>{const L=P.filter(fn);return L.length?`<h4>${l}</h4><div class="lg-tiles">${L.map(p=>`<button type="button" class="lg-tile ${p.ini.toLowerCase()==sel?'on':''}" data-i="${lgEsc(p.ini)}" onclick="lgPick(this.dataset.i)"><i>${lgEsc(p.ini)}</i><small>${LGR[p.sa?'sa':p.role]}</small></button>`).join('')}</div>`:''};
- return grp('Super admin',p=>p.sa)+grp('Admins',p=>p.role=='admin'&&!p.sa)+grp('HODs',p=>p.role=='hod')+grp('Operators',p=>p.role=='operator')||'<p class="sub" style="margin:4px 2px">No match. You can still sign in with the ID you typed.</p>'}
+const LGR={sa:'Admin',admin:'Management',hod:'HOD',operator:'Operator'};
+const lid=p=>p.role=='admin'&&!p.sa?p.ini:p.id;
+function lgTiles(f){const P=(S.people||[]).filter(p=>!f||(p.ini+' '+p.id).toLowerCase().includes(f.toLowerCase())),sel=(S.sel||'').toLowerCase();
+ const grp=(l,fn)=>{const L=P.filter(fn);return L.length?`<h4>${l}</h4><div class="lg-tiles">${L.map(p=>`<button type="button" class="lg-tile ${lid(p).toLowerCase()==sel?'on':''}" data-i="${lgEsc(lid(p))}" onclick="lgPick(this.dataset.i)"><i>${lgEsc(p.ini)}</i><small>${LGR[p.sa?'sa':p.role]}</small></button>`).join('')}</div>`:''};
+ return grp('Admin',p=>p.sa)+grp('Management',p=>p.role=='admin'&&!p.sa)+grp('HODs',p=>p.role=='hod')+grp('Operators',p=>p.role=='operator')||'<p class="sub" style="margin:4px 2px">No match. You can still sign in with the ID you typed.</p>'}
 function lgShow(f){const p=$('#lgp');if(!p)return;p.innerHTML=lgTiles(f||'');p.hidden=false}
 function lgToggle(){const p=$('#lgp');if(p.hidden){$('#lu').blur();lgShow()}else p.hidden=true}
 function lgType(v){S.sel=v;lgShow(v.trim())}
