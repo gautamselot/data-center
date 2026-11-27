@@ -12,7 +12,7 @@ const bump=k=>{if(Object.keys(fails).length>5000)for(const x in fails)delete fai
 const me=x=>({...pub(x),mc:x.must_change?1:0});
 route('POST','/api/login',null,(u,b,res)=>{const id=String(b.id||'').trim().toLowerCase(),ki='u:'+id,kp='p:'+res.ip;
  if(hit(ki)>=5||hit(kp)>=20)bad('Too many attempts. Wait 5 minutes.',429);
- const x=q1('SELECT * FROM users WHERE lower(id)=? OR (role='admin' AND super=0 AND lower(ini)=?)',id,id);if(!x||!x.active||!check(String(b.pw||''),x.pw_hash)){bump(ki);bump(kp);if(x)audit(x.id,'Failed sign-in');bad('ID or password is incorrect, or the account is inactive.',401)}
+ const x=q1("SELECT * FROM users WHERE lower(id)=? OR (role='admin' AND super=0 AND lower(ini)=?)",id,id);if(!x||!x.active||!check(String(b.pw||''),x.pw_hash)){bump(ki);bump(kp);if(x)audit(x.id,'Failed sign-in');bad('ID or password is incorrect, or the account is inactive.',401)}
  delete fails[ki];ex('DELETE FROM sessions WHERE expires<?',Date.now());
  const t=crypto.randomBytes(32).toString('hex');ex('INSERT INTO sessions VALUES(?,?,?)',t,x.id,Date.now()+YEAR);res.cookie=`dc_session=${t}; HttpOnly; SameSite=Lax; Path=/; Max-Age=${YEAR/1000}`;audit(x.id,'Signed in');return{user:me(x)}});
 // Signs out THIS device only (other devices stay signed in).
