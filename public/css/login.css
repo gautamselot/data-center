@@ -15,7 +15,7 @@ body.lg-on{overflow:hidden}body.lg-on header{display:none}
 .lg-brand small{margin-top:26px;color:#9a9da4;letter-spacing:.14em;text-transform:uppercase;font-size:12px}
 .lg-form{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;padding:40px 24px}
 .lg-form form{width:100%;max-width:400px}
-.lg-form h2{margin:0 0 8px;font-size:28px;font-weight:800;letter-spacing:-.01em}
+.lg-form h2{margin:0;font-size:28px;font-weight:800;letter-spacing:-.01em}
 .lg-sub{margin:6px 0 26px;color:var(--mut)}
 .lg-form label{display:block;margin:18px 0 7px;font-size:13px;font-weight:700;color:var(--ink)}
 .lg-field{position:relative}
@@ -63,5 +63,3 @@ body.lg-on{overflow:hidden}body.lg-on header{display:none}
 .ac .lg-btn{margin-top:18px}
 .ac-out{display:block;width:100%;height:50px;margin-top:12px;font:inherit;font-weight:700;color:var(--r);background:none;border:1.5px solid var(--line);border-radius:12px;cursor:pointer}
 .lg-tile small{overflow-wrap:anywhere;text-align:center}
-.lg-brand{align-items:center}
-@media(max-width:860px){.lg-brand{grid-template-columns:1fr;justify-items:center}.lg-logo{grid-row:auto}}
