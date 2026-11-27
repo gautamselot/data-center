@@ -3,6 +3,7 @@ const OFFR=['Manpower Shortage','Log Shortage','Machine Breakdown','Weekly Off',
 V.entry=()=>{const adm=S.u.role=='admin',al=adm?PID:S.u.pr,d=S.ed;if(!al.includes(S.ep))S.ep=al[0];
  // re = the saved entry; e = what fills the form (empty right after saving so the next entry starts clean)
  const p=S.ep,re=E(d,p),e=S.fresh==d+'|'+p?null:re,lk=re&&re.st=='locked'&&!adm;
+
  if(!al.length)return '<h1>Entry</h1><p class="sub">No presses are assigned to you. Ask an admin.</p>';
  const v=(k,s)=>{const x=e&&e[s=='A'?'a':'b'][k];return x==null?'':x},inp=(k,s)=>`<input id="${k}${s}" type="number" step="0.01" min="0" inputmode="decimal" value="${v(k,s)}" oninput="calc()" ${lk?'disabled':''}>`,
  hm=(k,s)=>{const t=Math.round((+v(k,s)||0)*60),hh=Math.floor(t/60),mm=t%60,id=k+s,d0=lk?'disabled':'';return `<div class="tm"><input class="tx" id="${id}t" inputmode="numeric" autocomplete="off" placeholder="00:00" maxlength="5" value="${pad2(hh)}:${pad2(mm)}" oninput="tmType('${id}')" onblur="tmFmt('${id}')" onfocus="this.select()" ${d0}><span class="hm"><select id="${id}h" onchange="tmSel('${id}')" ${d0} aria-label="hours">${o2(13,hh)}</select><b>:</b><select id="${id}m" onchange="tmSel('${id}')" ${d0} aria-label="minutes">${o2(60,mm)}</select></span></div>`},
@@ -13,10 +14,12 @@ V.entry=()=>{const adm=S.u.role=='admin',al=adm?PID:S.u.pr,d=S.ed;if(!al.include
  const rso=s=>{const k='off'+s.toLowerCase(),t=String((e&&e.rs[k])||''),m=OFFR.includes(t)?t:t?'Others':'',x=m=='Others'?t.replace(/^Others:\s*/,''):'';
   return `<div id="rw_${k}" style="display:none"><label>Shift ${s} off: reason</label><select id="rs_${k}" onchange="offrChg('${s}')" ${lk?'disabled':''}><option value="">Select reason</option>${OFFR.map(o=>`<option ${o==m?'selected':''}>${o}</option>`).join('')}</select><input id="rx_${k}" placeholder="Type the reason" value="${x.replace(/"/g,'&quot;')}" style="margin-top:8px;display:${m=='Others'?'block':'none'}" ${lk?'disabled':''}></div>`};
  const hint=re?(re.st=='locked'?'Locked = final. Only an admin can change it.':adm?'Saved = can still be corrected. Lock it to make it final.':'Saved = you can still correct it until an admin locks it.'):'';
+ const BT=['Mechanical','Electrical','Mechanical + Electrical'],bm=String((e&&e.rs.brk)||'').match(/^(Mechanical \+ Electrical|Mechanical|Electrical): ([\s\S]*)$/),bt=bm?bm[1]:'',bx=bm?bm[2]:String((e&&e.rs.brk)||'');
+const rsBrk=`<div id="rw_brk" style="display:none"><label>Breakdown type</label><select id="bt" ${lk?'disabled':''}><option value="">Select type</option>${BT.map(x=>`<option ${x==bt?'selected':''}>${x}</option>`).join('')}</select><label>Breakdown: reason and action</label><input id="rs_brk" value="${bx.replace(/"/g,'&quot;')}" ${lk?'disabled':''}></div>`;
  return `<h1>Daily entry</h1><p class="sub">One entry per press per day, in two 12 hour shifts. Target for this press today: <b>${tgB(d,p)} t</b> (reports halve it for each shift marked off). Type hours as hh:mm (11:30 is eleven and a half hours) or pick them from the lists. Input and output are entered as written on the sheet. ${p=='P10'?'P10 reports show them as entered.':'Reports and the dashboard show 5 times these values for this press.'}</p>
  <div class="card"><div class="row"><div><label style="margin-top:0">Date</label><input type="date" value="${d}" max="${TD}" onchange="S.ed=this.value||TD;S.fresh=null;draw()"></div><div><label style="margin-top:0">Press</label><select onchange="S.ep=this.value;S.fresh=null;draw()">${al.map(x=>`<option value="${x}" ${x==p?'selected':''}>${pl(x)}</option>`).join('')}</select></div><div><label style="margin-top:0">Status</label><div style="padding-top:8px">${re?`<span class="b ${re.st=='locked'?'r':'g'}">${re.st=='locked'?'Locked':'Saved'}</span> by ${usr(re.by)?usr(re.by).name:re.by}`:'<span class="b r">not entered</span>'}${adm&&re?` <button class="btn s" onclick="lockE()">${re.st=='locked'?'Unlock (allow edits)':'Lock (final)'}</button>`:''}</div>${hint?`<small style="display:block;margin-top:6px;color:var(--mut)">${hint}</small>`:''}</div></div></div>
  <div class="card tw" style="margin-top:12px"><table class="et"><tr class="hd"><th></th><th>Shift A (Day)</th><th>Shift B (Night)</th><th>Total</th><th>Daily allowable limit</th></tr>${rows}</table></div>
- <div class="card" style="margin-top:12px">${rso('A')}${rso('B')}${rs('log','Log shortage')}${rs('brk','Breakdown')}${rs('oth','Other hours')}<div class="pv" id="tal"></div>${lk?'<p class="sub">This entry is locked. Ask an admin to unlock it.</p>':'<button class="btn w" onclick="saveE()">Save entry</button>'}</div>`};
+ <div class="card" style="margin-top:12px">${rso('A')}${rso('B')}${rsBrk}${rs('oth','Other hours')}<div class="pv" id="tal"></div>${lk?'<p class="sub">This entry is locked. Ask an admin to unlock it.</p>':'<button class="btn w" onclick="saveE()">Save entry</button>'}</div>`};
 const isOff=s=>{const c=$('#off'+s);return !!(c&&c.checked)};
 const g=id=>{if(/^(inp|out|run|die|pow|man|log|brk|noo|oth|hc|dies|ord)[AB]$/.test(id)&&isOff(id.slice(-1)))return 0;const el=$('#'+id);if(el)return parseFloat(el.value)||0;const h=$('#'+id+'h');return h?(+h.value)+(+$('#'+id+'m').value)/60:0};
 function tmType(id){const[h,m]=tmParse($('#'+id+'t').value);$('#'+id+'h').value=h;$('#'+id+'m').value=m;calc()}
@@ -26,7 +29,7 @@ function offchg(s){const off=$('#off'+s).checked;ROWS.forEach(([k])=>{if(k=='rec
 function offrChg(s){const k='off'+s.toLowerCase();$('#rx_'+k).style.display=$('#rs_'+k).value=='Others'?'block':'none'}
 function calc(){const H={A:0,B:0};['A','B'].forEach(s=>{H[s]=isOff(s)?12:HF.reduce((x,k)=>x+g(k+s),0);const i=g('inp'+s),o=g('out'+s);$('#rec'+s).textContent=i?R2(o/i*100)+'%':'-'});
  ROWS.forEach(([k])=>{if(k=='rec')return;const t0=g(k+'A')+g(k+'B'),t=R2(t0);$('#t_'+k).textContent=HF.includes(k)?fh(t0):t;if(LIM[k]!=null)$('#lm_'+k).className=Math.round(t0*60)>LIM[k]*60?'r':''});
- ['log','brk','oth'].forEach(k=>{const w=$('#rw_'+k);if(w)w.style.display=(g(k+'A')+g(k+'B'))>0?'':'none'});
+ ['brk','oth'].forEach(k=>{const w=$('#rw_'+k);if(w)w.style.display=(g(k+'A')+g(k+'B'))>0?'':'none'});
  ['A','B'].forEach(s=>{const w=$('#rw_off'+s.toLowerCase());if(w)w.style.display=isOff(s)?'':'none'});
  const ti=g('inpA')+g('inpB'),to=g('outA')+g('outB');$('#recT').textContent=ti?R2(to/ti*100)+'%':'-';
  const f=(l,h,m)=>`<span class="b ${eq(h,m)?'g':'r'}">${l}: ${fh(h)} of ${fh(m)} h${eq(h,m)?'':h<m?' (left '+fh(m-h)+')':' (over '+fh(h-m)+')'}</span>`;
@@ -34,8 +37,8 @@ function calc(){const H={A:0,B:0};['A','B'].forEach(s=>{H[s]=isOff(s)?12:HF.redu
 function saveE(){const mk=s=>{const o={};if(isOff(s))o.off=1;ROWS.forEach(([k])=>{if(k!='rec')o[k]=g(k+s)});return o};const a=mk('A'),b=mk('B');
  if(!eq(hsum(a),12)||!eq(hsum(b),12))return toast('Each shift must add up to exactly 12 hours');
  const tl=k=>g(k+'A')+g(k+'B')>0,rv=(k,on)=>on?$('#rs_'+k).value.trim():'',offR=s=>{const k='off'+s.toLowerCase(),v=$('#rs_'+k).value,x=$('#rx_'+k).value.trim();return v=='Others'?(x?'Others: '+x:''):v};
- const rs={log:rv('log',tl('log')),brk:rv('brk',tl('brk')),oth:rv('oth',tl('oth')),offa:isOff('A')?offR('A'):'',offb:isOff('B')?offR('B'):''};
+ const bty=tl('brk')?$('#bt').value:'',brs=rv('brk',tl('brk')),rs={log:'',brk:bty&&brs?bty+': '+brs:'',oth:rv('oth',tl('oth')),offa:isOff('A')?offR('A'):'',offb:isOff('B')?offR('B'):''};
  if(isOff('A')&&!rs.offa)return toast('Select a reason for Shift A being off');if(isOff('B')&&!rs.offb)return toast('Select a reason for Shift B being off');
- if(tl('log')&&!rs.log)return toast('Give a reason for log shortage');if(tl('brk')&&!rs.brk)return toast('Give a reason for breakdown');if(tl('oth')&&!rs.oth)return toast('Give a reason for other hours');
+ if(tl('brk')&&!bty)return toast('Select the breakdown type');if(tl('brk')&&!brs)return toast('Give a reason for breakdown');if(tl('oth')&&!rs.oth)return toast('Give a reason for other hours');
  run(async()=>{await api('/api/entry',{date:S.ed,press:S.ep,a,b,rs});await load();S.fresh=S.ed+'|'+S.ep;const nx=(S.u.role=='admin'?PID:S.u.pr).find(x=>!E(S.ed,x));if(nx){S.ep=nx;S.fresh=null}toast('Entry saved. Form cleared for the next entry');draw()})}
 function lockE(){run(async()=>{await api('/api/entry/lock',{date:S.ed,press:S.ep});await load();draw()})}
