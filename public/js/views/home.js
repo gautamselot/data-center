@@ -1,2 +1,5 @@
-// Home screen: the 5 module tiles. Live + permitted = opens its first screen; the rest are greyed out.
-V.home=()=>{const gs=GRP(S.u);return `<h1>Welcome, ${S.u.name.split(' ')[0]}</h1><p class="sub">Choose a module.</p><div class="tiles">${MODS.map(([k,l,live,c,i])=>{const g=gs.find(x=>x.k==k),on=g&&g.on;return `<button class="tile" style="--tc:${c}" ${on?`onclick="go('${g.subs[0][0]}')"`:'disabled'} aria-label="${l}"><span class="ti">${i}</span><b>${l}</b><small>${on?'Open':live?'No access':'Coming soon'}</small></button>`}).join('')}</div>`};
+// Home screen: the 5 module tiles, plus Requests for Admin/Management. Live + permitted = opens its first screen; the rest are greyed out.
+V.home=()=>{const gs=GRP(S.u),rq=gs.find(x=>x.k=='req'&&x.on);
+ const mods=MODS.map(([k,l,live,c,i])=>{const g=gs.find(x=>x.k==k),on=g&&g.on;return `<button class="tile" style="--tc:${c}" ${on?`onclick="go('${g.subs[0][0]}')"`:'disabled'} aria-label="${l}"><span class="ti">${i}</span><b>${l}</b><small>${on?'Open':live?'No access':'Coming soon'}</small></button>`}).join('');
+ const req=rq?`<button class="tile" style="--tc:#2f6fb5" onclick="go('req')" aria-label="Requests"><span class="ti">${IC('<path d="M5 4h14v16H5zM8 9h8M8 13h8M8 17h5"/>')}</span><b>Requests</b><small>Open</small></button>`:'';
+ return `<h1>Welcome, ${S.u.name.split(' ')[0]}</h1><p class="sub">Choose a module.</p><div class="tiles">${mods}${req}</div>`};
