@@ -8,7 +8,7 @@ function pressModel(p,mo){const H=['Date','Day','Target (t)','Input (t)','Output
   return[C(fd(d)),C(DN[dow(d)]),N(t),N(i),{...N(o),c:col(o,t)},C(i?R2(o/i*100)+'%':'-'),...x.map((v,j)=>j<9?Hc(v):N(v))]});
  const pc=tm?Math.floor(to/tm*100):0;
  return{title:'Press report: '+pl(p),sub:mlab(mo)+' · output in tons · green = target met, red = not met',head:H,rows,foot:[[C('Total (reported days)'),C(''),N(tt),N(ti),{...N(to),c:col(to,tt)},C(ti?R2(to/ti*100)+'%':'-'),...sm.map((v,j)=>j<9?Hc(v):N(v))],[C('Monthly target'),C(''),N(tm),...bl(15)],[C('Achieved of monthly target'),C(''),C(''),C(''),{v:pc+'%',c:col(pc,100)},...bl(13)]]}}
-const N3=x=>x==null?C(''):{...C(x.toFixed(3),+x.toFixed(3)),f:'0.000'},outT3=(d,p)=>{const e=E(d,p);return e?val(e,'out')/1000:null};
+const N3=x=>x==null?C(''):{...C(x.toFixed(2),+x.toFixed(2)),f:'0.00'},outT3=(d,p)=>{const e=E(d,p);return e?val(e,'out')/1000:null};
  function cumModel(mo){const H=['Date','Day',...PID,'Total'],ps=PID.map(()=>0);let T=0,TT=0,pt=PID.map(()=>0);
  const rows=mdays(mo).map(d=>{const ts=PID.map(p=>tg(d,p)),tsum=ts.reduce((a,b)=>a+b,0);pt=pt.map((x,i)=>x+ts[i]);TT+=tsum;const os=PID.map(p=>outT3(d,p));
   if(os.every(x=>x==null))return[C(fd(d)),C(DN[dow(d)]),...PID.map(()=>C('')),C('')];os.forEach((x,i)=>ps[i]+=x||0);const s=os.reduce((a,b)=>a+(b||0),0);T+=s;

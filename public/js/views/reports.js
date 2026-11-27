@@ -6,9 +6,9 @@
 .rp-act{display:flex;gap:8px;margin-top:12px}
 .rp-card{padding:0;margin-top:12px;overflow:hidden;border-radius:14px}
 .rp-hd{padding:14px 16px 4px}.rp-hd b{font-size:16px}.rp-hd .sub{margin:3px 0 12px;font-size:13px}
-.rp-sc{overflow:auto;-webkit-overflow-scrolling:touch;max-height:72vh;max-height:72dvh;min-height:200px;border-top:1px solid var(--line)}
-.rp-t{width:100%;border-collapse:separate;border-spacing:0;font-size:14px;font-variant-numeric:tabular-nums}
-.rp-t th,.rp-t td{padding:11px 14px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line)}
+.rp-sc{overflow-x:auto;-webkit-overflow-scrolling:touch;border-top:1px solid var(--line)}.rp-sc.rp-fit{overflow:visible}
+.rp-t{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;font-variant-numeric:tabular-nums}
+.rp-t th,.rp-t td{padding:6px 10px;text-align:right;white-space:nowrap;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
 .rp-t tr:last-child td{border-bottom:0}
 .rp-t th{position:sticky;top:0;z-index:2;background:var(--bg);color:var(--mut);font-size:12.5px;font-weight:700;border-bottom:2px solid var(--line)}
 .rp-t th:nth-child(-n+2),.rp-t tr:not(.ft) td:nth-child(-n+2),.rp-t tr.ft td:first-child{text-align:left}
@@ -29,7 +29,10 @@
 .rp-ctl{grid-template-columns:1fr 1fr;gap:10px}.rp-ctl>div:first-child,.rp-ctl>div:last-child:nth-child(2){grid-column:1/-1}
 .rp-act .btn{flex:1}
 .rp-hd{padding:12px 12px 0}.rp-hd .sub{font-size:12px}
-.rp-t{font-size:12.5px}.rp-t th,.rp-t td{padding:9px 8px}
+.rp-t{font-size:12px}.rp-t th,.rp-t td{padding:6px 7px}
+.rp-fit .rp-t{table-layout:fixed;font-size:11px}.rp-fit .rp-t th,.rp-fit .rp-t td{padding:6px 3px}
+.rp-fit .rp-t th{font-size:10.5px}.rp-fit .rp-t th:nth-child(1){width:16%}.rp-fit .rp-t th:nth-child(2){width:10%}.rp-fit .rp-t th:last-child{width:16%}
+.rp-c th:not(:first-child),.rp-c td:not(:first-child){min-width:0}
 
 }`;document.head.appendChild(s)})();
 const rpCell=(c,t='td')=>`<${t}${c.c?` class="${c.c}"`:''}${c.s?` colspan="${c.s}"`:''}>${c.v}</${t}>`;
@@ -40,5 +43,5 @@ const repV=m=>{S.rt=m;const c=m=='c',ps=S.u.role=='admin'?PID:S.u.pr;if(!c&&!ps.
  <div class="card"><div class="rp-ctl">${c?'':`<div><label style="margin-top:0">Press</label><select onchange="S.rp=this.value;draw()">${ps.map(x=>`<option value="${x}" ${x==S.rp?'selected':''}>${pl(x)}</option>`).join('')}</select></div>`}
  <div><label style="margin-top:0">Month</label><input type="month" value="${S.mo}" onchange="S.mo=this.value||S.mo;draw()"></div></div>
  ${none?'':'<div class="rp-act"><button class="btn s" onclick="xl()">Excel</button><button class="btn s" onclick="prt()">Printable report (PDF)</button></div>'}</div>
- ${none?'<p class="sub" style="margin-top:12px">No presses are assigned to you. Ask an admin.</p>':`<div class="card rp-card"><div class="rp-hd"><b>${M.title}</b><p class="sub">${M.sub}</p></div><div class="rp-sc">${rpTbl(M)}</div></div>`}`};
+ ${none?'<p class="sub" style="margin-top:12px">No presses are assigned to you. Ask an admin.</p>':`<div class="card rp-card"><div class="rp-hd"><b>${M.title}</b><p class="sub">${M.sub}</p></div><div class="rp-sc${c?' rp-fit':''}">${rpTbl(M)}</div></div>`}`};
 V.rep=()=>repV('p');V.crep=()=>repV('c');
